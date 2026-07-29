@@ -12,7 +12,7 @@ export function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
-/** Centered loading spinner + message. */
+/** Centered loading spinner (the spinner here can be taken out and added later with CSS) + message. */
 export function loading(message = 'Loading…') {
   return `<div class="state"><div class="spinner" aria-hidden="true"></div><p>${escapeHtml(
     message

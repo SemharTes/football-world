@@ -1,0 +1,127 @@
+/* ---- Design tokens: change colors in ONE place ---- */
+:root {
+    --green: #21ba78;
+    --green-dark: #155c39;
+  --ink: #1f2933;      /* main text */
+  --muted: #5b6b7b;    /* secondary text */
+  --line: #e2e8ee;     /* borders */
+  --bg: #f6f8fa;       /* page background */
+    --card: #ffffff;
+    --danger: #b3261e;
+    --radius: 12px;
+    --shadow: 0 1px 3px rgba(20,40,60,.08), 0 6px 20px rgba(20,40,60,.06);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;          /* comfortable base size */
+  line-height: 1.5;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+a { color: var(--green-dark); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---- Header + nav ---- */
+.site-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+  padding: .9rem 1.5rem;
+  background: var(--green); color: #fff;
+  box-shadow: var(--shadow);
+  position: sticky; top: 0; z-index: 10;
+}
+.brand { font-size: 1.35rem; font-weight: 700; color: #fff; }
+.brand:hover { text-decoration: none; }
+.main-nav { display: flex; gap: .4rem; }
+.main-nav a {
+  color: #eaf4ee; padding: .45rem .9rem;
+  border-radius: 999px; font-weight: 600;
+}
+.main-nav a:hover { background: rgba(255,255,255,.15); text-decoration: none; }
+.main-nav a.active { background: #fff; color: var(--green-dark); }
+
+/* ---- Layout ---- */
+.app { max-width: 1000px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; min-height: 60vh; }
+.view h1 { margin: 0 0 .25rem; font-size: 1.8rem; }
+.lede { margin: 0 0 1.25rem; color: var(--muted); }
+.site-footer { text-align: center; padding: 1.25rem; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--line); }
+
+/* ---- Forms ---- */
+.search, .inline-form { display: flex; gap: .6rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.inline-form label { display: flex; flex-direction: column; font-size: .85rem; font-weight: 600; color: var(--muted); gap: .25rem; }
+input {
+  font-size: 1rem; padding: .6rem .8rem;
+  border: 1px solid var(--line); border-radius: var(--radius);
+  background: #fff; color: var(--ink);
+}
+.search input[type="search"] { flex: 1 1 260px; }
+.inline-form input { width: 130px; }
+input:focus { outline: 2px solid var(--green); outline-offset: 1px; }
+button {
+    font-size: 1rem; font-weight: 600; padding: .6rem 1.3rem;
+    border: none; border-radius: var(--radius);
+    background: var(--green); color: #fff; cursor: pointer;
+}
+button:hover { background: var(--green-dark); }
+
+/* ---- Cards grid ---- */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+.card {
+    display: flex; gap: .9rem; padding: 1rem;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.card .logo { width: 52px; height: 52px; object-fit: contain; flex-shrink: 0; }
+.card-body h3 { margin: 0 0 .2rem; font-size: 1.05rem; }
+.card .meta { margin: 0 0 .5rem; font-size: .85rem; color: var(--muted); }
+
+/* ---- Standings table ---- */
+.league-head, .team-head { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+.league-head .logo, .team-head .logo { width: 56px; height: 56px; object-fit: contain; }
+.team-head .logo.big { width: 80px; height: 80px; }
+.league-head h2, .team-head h1 { margin: 0; }
+.meta { color: var(--muted); }
+.table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }   /* lets wide tables scroll on mobile */
+.standings {
+  width: 100%; border-collapse: collapse; background: var(--card);
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); min-width: 560px;
+}
+.standings th, .standings td { padding: .6rem .7rem; text-align: center; border-bottom: 1px solid var(--line); }
+.standings thead th { background: var(--green); color: #fff; font-size: .85rem; }
+.standings tbody tr:hover { background: #f0f7f2; }
+.standings .rank { font-weight: 700; }
+.standings .points { font-weight: 700; color: var(--green-dark); }
+.team-cell { text-align: left; }
+.team-cell a { display: flex; align-items: center; gap: .55rem; font-weight: 600; }
+.badge { width: 24px; height: 24px; object-fit: contain; }
+
+/* ---- Team page ---- */
+.back { display: inline-block; margin-bottom: 1rem; font-weight: 600; }
+.facts { list-style: none; padding: 0; margin: 0 0 1.75rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .75rem; }
+.facts li { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: .75rem 1rem; box-shadow: var(--shadow); }
+.facts li span { display: block; font-size: .78rem; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); margin-bottom: .2rem; }
+.squad { list-style: none; padding: 0; margin: .75rem 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: .6rem; }
+.player { display: flex; align-items: center; gap: .7rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: .5rem .7rem; }
+.player-name { display: block; font-weight: 600; font-size: .95rem; }
+.player-meta { display: block; font-size: .82rem; color: var(--muted); }
+
+/* ---- Loading / error / empty states ---- */
+.state { text-align: center; padding: 2.5rem 1rem; color: var(--muted); }
+.state.error { color: var(--danger); }
+.spinner {
+  width: 34px; height: 34px; margin: 0 auto .75rem;
+  border: 3px solid var(--line); border-top-color: var(--green);
+  border-radius: 50%; animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---- Mobile ---- */
+@media (max-width: 520px) {
+  .site-header { justify-content: center; }
+  .view h1 { font-size: 1.5rem; }
+}

@@ -23,9 +23,11 @@ const cache = new Map();
  */
 function buildRequest(endpoint, params) {
   if (USE_PROXY) {
+    // prod:call our own proxy, no key attached
     const query = new URLSearchParams({ endpoint, ...params }).toString();
     return { url: `/api/football?${query}`, headers: {} };
   }
+  // Dev: call the API direclty with the key header
   const query = new URLSearchParams(params).toString();
   return {
     url: `${BASE_URL}/${endpoint}${query ? `?${query}` : ''}`,
@@ -42,9 +44,10 @@ function buildRequest(endpoint, params) {
  */
 export async function apiGet(endpoint, params = {}) {
   // In dev the browser needs the key; in prod the server holds it instead.
+  // Only dev needs the key in the browser; prod gets it from the server.
   if (!USE_PROXY && !API_KEY) {
     throw new Error(
-      'Missing API key. Copy ".env.example" to ".env" and add your API-Sports key, then restart the dev server.'
+      'Missing API key. Copy ".env.example" to ".env" and add your API-Sports key, then restart the dev server.',
     );
   }
 
@@ -54,6 +57,8 @@ export async function apiGet(endpoint, params = {}) {
   const cacheKey = `${endpoint}?${new URLSearchParams(params).toString()}`;
   if (cache.has(cacheKey)) {
     return cache.get(cacheKey);
+
+    const { url, headers } = buildRequest(endpoint, params);
   }
 
   let payload;
@@ -65,14 +70,14 @@ export async function apiGet(endpoint, params = {}) {
     payload = await res.json();
   } catch (err) {
     // Normalise fetch/parse failures into a friendly message.
-    throw new Error(err.message || 'Could not reach the football API.');
+    throw new Error(err.message || "Could not reach the football API.");
   }
 
   // The API returns HTTP 200 even for auth/quota problems; those show up in
   // the `errors` field of the body, so surface them as real errors.
   if (payload.errors && Object.keys(payload.errors).length > 0) {
-    const messages = Object.values(payload.errors).join(' ');
-    throw new Error(messages || 'The football API returned an error.');
+    const messages = Object.values(payload.errors).join(" ");
+    throw new Error(messages || "The football API returned an error.");
   }
 
   const data = payload.response || [];

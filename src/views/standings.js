@@ -52,7 +52,7 @@ async function loadStandings(leagueId, season, target) {
     const data = await apiGet("standings", { league: leagueId, season });
     if (!data.length) {
       target.innerHTML = emptyState(
-        "No standings found. Double-check the league ID and season. Free API keys cover seasons 2021–2023.",
+        "No standings found. Double-check the league ID and season.",
       );
       return;
     }

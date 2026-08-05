@@ -3,11 +3,12 @@ import { link } from '../router.js';
 import { escapeHtml, loading, errorState, emptyState } from '../ui.js';
 
 const DEFAULT_QUERY = 'Premier League';
+const MAX_SEASON = 2024;
 
 // From a league's seasons, pick the latest one that has standings coverage
 function pickSeason(seasons = []) {
-  const withStandings = seasons.filter((s) => s.coverage?.standings);
-  const pool = withStandings.length ? withStandings : seasons;
+  const withStandings = seasons.filter((s) => s.coverage?.standings && s.year <= MAX_SEASON);
+  const pool = withStandings.length ? withStandings : seasons.filter((s) => s.coverage?.standings);
   if (!pool.length) return null;
   return pool.reduce((latest, s) => (s.year > latest.year ? s : latest)).year;
 }

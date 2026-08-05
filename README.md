@@ -1,4 +1,5 @@
-# ⚽ football-world:  https://semhar-football-world.vercel.app/
+# ⚽ football-world: 
+  https://semhar-football-world.vercel.app/
 
 A small vanilla JavaScript website that displays live football data from the
 [API-Sports Football (v3)](https://www.api-football.com/documentation-v3) API. It datasearch leagues, view standings, and drill into teams and their squads.
